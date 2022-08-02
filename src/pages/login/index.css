@@ -35,7 +35,6 @@
 .ml-part-input{
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
 }
 
 .inf-pgn{

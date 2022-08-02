@@ -1,11 +1,8 @@
 import React, {useState} from 'react';
-import Axios from 'axios'
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch} from 'react-redux';
 import { setLogin,loginPost } from '../../config/redux/action/setForm.js';
-import CheckTokenUser from '../../config/midleware/checkTokenUser.js';
 import RequestAccess from '../../config/midleware/requestAccess.js';
-import RefreshToken from '../../config/midleware/refreshToken.js';
 import useAuth from '../../hooks/useAuth.js';
 import './index.css';
 // components
@@ -13,9 +10,9 @@ import { Button, Input,Gap, Error } from '../../components';
 
 // Image
 import { Logo } from '../../assets'
+import RefreshToken from '../../config/midleware/refreshToken.js';
 const Login = () => {
 	const [error, setError] = useState({})
-	const location = useLocation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const {setAuth} = useAuth();
@@ -55,7 +52,8 @@ const Login = () => {
 	const handleClickLogin = () => {
 		loginPost(login)
 		.then(async data => {
-			await checkToken(data.accessToken, data.refreshToken);
+			const {accessToken, refreshToken} = data.data
+			await checkToken(accessToken, refreshToken);
 		})
 		.catch(error => {
 			setError(error.data.message)

@@ -3,7 +3,7 @@ import RefreshToken from './refreshToken.js';
 const RequestAccess = (accessToken, refreshToken = undefined) => {
 	return new Promise(async (resolve, reject) => {
 		try{
-			const res = await Axios.get('/my-books', {
+			const res = await Axios.get('https://e-books-app.herokuapp.com/my-books', {
 				withCredentials:true,
 				headers:{
 					Accept: 'application/json',

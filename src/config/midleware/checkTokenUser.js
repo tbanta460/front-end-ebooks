@@ -25,7 +25,7 @@ const CheckTokenUser = (auth) => {
 	const getDataUser = async () => {
 		let result;
 	
-		await getAllData(`/my-books/${auth.userId}`)
+		await getAllData(`https://e-books-app.herokuapp.com/my-books/${auth.userId}`)
 		.then(async data => {
 
 			result = auth.accessToken !== undefined ? await tokenUser(data.data.data) : ({success:false, message:"Token Tidak Ditemukan"})

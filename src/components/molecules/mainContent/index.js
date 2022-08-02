@@ -14,7 +14,7 @@ const MainContent = () => {
 	const [isGenres, setIsGenres] = useState({});
 	useEffect(() => {
 		const getDataUser = async () => {
-			Axios.get(`/getusers`)
+			Axios.get(`https://e-books-app.herokuapp.com/getusers`)
 			.then(async data => {
 				await setDataUser(data.data.data);
 			})
@@ -24,7 +24,7 @@ const MainContent = () => {
 		}
 
 		const getDataBooks = async () => {
-		getAllData(`/dashboard/getbooks`)
+		getAllData(`https://e-books-app.herokuapp.com/dashboard/getbooks`)
 			.then(data => {
 				let newObj = {};
 				if(data){
@@ -51,8 +51,8 @@ const MainContent = () => {
 		}
 
 		const getDataChap = async () => {
-			const res = await dataChaps('/chaps');
-			setNewChaps(res.data.data)
+			const res = await dataChaps('https://e-books-app.herokuapp.com/chaps');
+			setNewChaps(res.data.datas)
 		}
 		getDataBooks()
 		getDataUser()

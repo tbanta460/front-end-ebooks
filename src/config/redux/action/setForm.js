@@ -23,23 +23,21 @@ export const setImagePreview = (data) => {
 }
 
 export const loginPost = (dataUser, path) => {
-	return new Promise((resolve,reject) => {
-		const objData = {}
+	const objData = {}
 		objData["username"] = dataUser.username;
 		objData["password"] = dataUser.password;
-		const res = JSON.stringify(objData);
-		Axios.post(`http://localhost:5000/login`,objData,{
-			withCredentials: true,
-			headers:{
-				'Content-Type':'application/json'
-			}
-		})
-		.then(data => {
-			resolve(data.data);
-		})
-		.catch(error => {
-			reject(error.response);
-		})
+
+	return Axios.post('https://e-books-app.herokuapp.com/login', objData,{
+		withCredentials:true,
+		headers:{
+			'Content-Type':'application/json'
+		}
+	}).then(data => {
+		console.log(data, "apakah benar?")
+		return data
+	}).catch(error => {
+		console.log(error.response, "apakah salah?")
+		return error.response
 	})
 }
 export const registerPost = (dataUser) => {
@@ -51,7 +49,7 @@ export const registerPost = (dataUser) => {
 		objData["password"] = dataUser.password
 		objData["confirmpassword"] = dataUser.confirmpassword
 	
-		Axios.post(`http://localhost:5000/register`, objData, {
+		Axios.post(`https://e-books-app.herokuapp.com/register`, objData, {
 			headers: {
 				'Content-Type': 'application/json'
 			}
@@ -65,15 +63,22 @@ export const registerPost = (dataUser) => {
 	})
 }
 export const bookPost = (dataBook) => {
+	
+	let newObj = {}
+	for(let pro in dataBook){
+		newObj[pro] = dataBook[pro]
+	}
+	// multipart/form-data
+	
 	const data = new FormData();
 	data.append('title', dataBook.title);
 	data.append('image', dataBook.image);
 	data.append('iduser', dataBook.iduser);
 	data.append('genres', dataBook.genres);
 	data.append('sinopsis', dataBook.sinopsis);
-	return Axios.post('http://localhost:5000/dashboard/book/create', data, {
+	return Axios.post('https://e-books-app.herokuapp.com/dashboard/book/create', newObj, {
 		headers: {
-			'Content-Type': 'multipart/form-data'
+			'Content-Type': 'application/json'
 		}
 	})
 	.then(data => {
@@ -86,7 +91,7 @@ export const bookPost = (dataBook) => {
 }
 export const getUser = (idUser) => {
 	return new Promise((resolve, reject) => {
-		Axios.get(`/dashboard/${idUser}`)
+		Axios.get(`https://e-books-app.herokuapp.com/dashboard/${idUser}`)
 			.then(data => {
 				resolve(data)
 			})

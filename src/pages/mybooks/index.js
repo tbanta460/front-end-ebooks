@@ -19,7 +19,7 @@ const MyBooks = () => {
 	useEffect(() => {
 		// Pengambilan data user dan data buku
 		const getDataUser = async (idUser = undefined) => {
-			Axios.get(`/my-books/${auth.userId}`)
+			Axios.get(`https://e-books-app.herokuapp.com/my-books/${auth.userId}`)
 			.then(async data => {
 				await setDataUser(data.data.data);
 			})
@@ -28,7 +28,7 @@ const MyBooks = () => {
 			});
 		}
 		const getDataBooks = (idUser = undefined) => {
-			getAllData(`/dashboard/getbooks/${auth.userId}`)
+			getAllData(`https://e-books-app.herokuapp.com/dashboard/getbooks/${auth.userId}`)
 			.then(async data => {
 				await setDataBooks(data.data.data)
 			})

@@ -11,7 +11,7 @@ const ListBooks = ({author, sinop, title, img, createAt, adrs, ...rest}) => {
 	const doc = parser.parseFromString(sinop,'text/html');
 	const getDivElement = doc.body.firstChild;
 	const getParagrafElement = getDivElement.children
-
+	
 	useEffect(() => {
 		let arrayCreatAt = []
 		if(createAt !== undefined || createAt !== null || createAt !== ""){
@@ -51,7 +51,7 @@ const ListBooks = ({author, sinop, title, img, createAt, adrs, ...rest}) => {
 								</div>
 							</div>
 						</div>
-						<CoverImage srcImage={`/${img}`} altImage="Cover Buku" />
+						<CoverImage srcImage={img} altImage="Cover Buku" />
 					</div>
                     <h4 className="txt-ttl"{...rest}>{title}</h4>
 				</div>

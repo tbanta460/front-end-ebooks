@@ -7,7 +7,7 @@ const SmallListBooks = ({titleBook, authorBook, srcc, altt}) => {
         <>
             <div className="ct-lst"> 
                 <div className="prt-two">
-                    <CoverImg srcImg={`/${srcc}`} altImg={altt} sizeCover="smal-cv"/>
+                    <CoverImg srcImg={srcc} altImg={altt} sizeCover="smal-cv"/>
                     <div className="wrp">
                         <h4 className="txt-ttl">{titleBook}</h4>
                         <span className='txt-ath'>{authorBook}</span>

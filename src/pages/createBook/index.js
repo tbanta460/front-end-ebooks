@@ -1,43 +1,105 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth.js';
 import './index.css';
 import { createNewBook, setImagePreview, bookPost } from '../../config/redux/action/setForm.js';
 // Components
 import { Input, Button, Upload, PopUp } from '../../components';
-
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import storage from '../../firebase';
 
 const CreateBook = () => {
 	const {createBook, imagepreview} = useSelector(state => state.SetForm );
 	const [status, setStatus] = useState(false);
 	const [message, setMessage] = useState("");
-	const { genres } = createBook;
+	const [progress, setProgress] = useState(0)
+	const { genres, image} = createBook;
 	const {auth} = useAuth();
 	const dispatch = useDispatch();
 	const parentEl = useRef(null);
 	const getDiv = useRef();
-
+	useEffect(() => {
+		if(progress === 100 && typeof image === 'string'){
+			const createMyBook = async () => {
+				const rest = await bookPost(createBook);
+				setStatus(rest.data.success);
+			}
+			createMyBook()
+		}
+	},[progress, image])
+	const storeImageToFirebase = async (file) => {
+		let perketes = 0
+		let fileName = new Date().getTime() + file.name;
+			const storageRef = ref(
+				storage,
+				`/images/${fileName}`
+			);
+			let uploadTask = uploadBytesResumable(storageRef, file);
+			await uploadTask.on(
+				"state_changed",
+				async (snapshot) => {
+					const uploaded = Math.floor(
+						(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+					);
+					setProgress(uploaded)
+					
+				},
+				(error) => {
+					console.log(error, "hasil eerror");
+				},
+				() => {
+					getDownloadURL(uploadTask.snapshot.ref).then( (url) => {
+						dispatch(createNewBook("image", url));
+					});
+				}
+			);
+	}
 	const handleClickEvent = async () => {
-		const getDivElement = getDiv.current;
 		try{
+			const getDivElement = getDiv.current;
+			let file = image
 			if(getDivElement.children.length !== 0 && Object.keys(createBook["title"]).length > 0){
 				createBook["author"] = auth.fullname.split("_").join(" ");
 				createBook["iduser"] = auth.userId;
 				createBook["sinopsis"] = getDivElement.outerHTML
-				const rest = await bookPost(createBook);
-
-				setStatus(rest.data.success);
-				
+				storeImageToFirebase(file);
 			}
 		}catch(error){
-			setMessage("Terjadi kesalahanketika membuat buku")
+			setMessage("Terjadi kesalahan ketika membuat buku")
 		}
 	}
 	const handleImage = (e) => {
 		const file = e.target.files[0];
 		dispatch(createNewBook("image", file));
 		dispatch(setImagePreview(URL.createObjectURL(file)));
+
+		// let fileName = new Date().getTime() + file.name;
+		// 	const storageRef = ref(
+		// 		storage,
+		// 		`/images/${fileName}`
+		// 	);
+		// 	let uploadTask = uploadBytesResumable(storageRef, file);
+		// 	uploadTask.on(
+		// 		"state_changed",
+		// 		(snapshot) => {
+		// 			const uploaded = Math.floor(
+		// 				(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+		// 			);
+		// 			if(uploaded === 100){
+		// 				getDownloadURL(uploadTask.snapshot.ref).then( (url) => {
+		// 					dispatch(createNewBook("image", url));
+		// 				});
+		// 			}
+		// 		},
+		// 		(error) => {
+		// 			console.log(error);
+		// 		}
+		// 		// () => {
+		// 			// getDownloadURL(uploadTask.snapshot.ref).then( (url) => {
+		// 			// 	dispatch(createNewBook("image", url));
+		// 			// });
+		// 		// }
+		// 	);
 	}
 	const hadleEventCheckbox = async (e) => {
 		if(genres === undefined){

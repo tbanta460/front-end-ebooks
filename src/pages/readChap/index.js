@@ -9,7 +9,7 @@ const ReadChap = () => {
 	const parser = new DOMParser();
 	const params = useParams();
 	useEffect(() => {
-		getAllData(`/chapter/${params.idchap}`)
+		getAllData(`https://e-books-app.herokuapp.com/chapter/${params.idchap}`)
 		.then(data => {
 			const elementParagraf = data.data.data[0].paragraf;
 

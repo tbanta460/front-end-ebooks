@@ -55,7 +55,7 @@ const RegSlide = ({dataBooks = [], titleGenre, id}) => {
 						{
 							dataBooks.length !== 0
 							? dataBooks.map((data, index) => {
-								return <div id={`${id}-${index}`} className="slide-show" key={data.idbook}><Link className="nav-link" to={`/sinopsis/${data.idbook}/${data.title.split(" ").join("-")}`}><SmallListBooks  authorBook={data.author} titleBook={data.title} srcc={data.cover} altt={`ini adalah cover dari gambar ${data.title}`}/></Link></div>
+								return( <div id={`${id}-${index}`} className="slide-show" key={data.idbook}><Link className="nav-link" to={`/sinopsis/${data.idbook}/${data.title.split(" ").join("-")}`}><SmallListBooks  authorBook={data.author} titleBook={data.title} srcc={data.cover} altt={`ini adalah cover dari gambar ${data.title}`}/></Link></div>)
 							})
 							: null
 						}

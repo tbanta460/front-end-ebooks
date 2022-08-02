@@ -31,7 +31,7 @@ const InfoGuide = () => {
                     {imgArr.map(data => {
                         return(
                             <div key={data.id}className="wrp-gid">
-                                <img src={data.img} alt="abstrak image background" className="img-gid"/>
+                                <img src={data.img} alt="gambar abstrak background" className="img-gid"/>
                                 <div className='wrp-txt-gid'>
                                     <h4 className="ttl-gid">{data.ttl}</h4>
                                     <span className="txt-gid">{data.txt}</span>

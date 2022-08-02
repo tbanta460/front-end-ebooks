@@ -16,7 +16,7 @@ const HeroBook = ({sinop, authorBook, titleBook, idBook,altt, srcc}) => {
         <>
             <div className="h-bk">
                 <Link className="nav-link nl" to={`/sinopsis/${idBook}/${titleBook.split(" ").join("-")}`}>
-                    <CoverImg srcImg={`/${srcc}`} altImg={altt} sizeCover="smal-cv"/>
+                    <CoverImg srcImg={srcc} altImg={altt} sizeCover="smal-cv"/>
                 </Link>
                     <div className="h-snp-bk">
                         <Link className="nav-link nl-f" to={`/sinopsis/${idBook}/${titleBook.split(" ").join("-")}`}>

@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import "./index.css";
@@ -12,9 +11,7 @@ import { Input, Button, PopUp } from '../../components';
 const CreateChap = () => {
 	const params = useParams();
 	const textPlaceholder = "Ketik Di Sini...";
-	const [isMessage, setMessage] = useState(null)
 	const [status, seStatus] = useState(false)
-	const dispatch = useDispatch();
 	const [values, setValue] = useState({
 		title:"",
 		placeholder:textPlaceholder,
@@ -33,7 +30,6 @@ const CreateChap = () => {
 	const handleKeyPress = async (e) => {
 		const getChildNodess = getTextArea.current.childNodes;
 		const lengthContent = getChildNodess[0].textContent.length;
-		const elementBr = (<br/>)
 		if((lengthContent === 0 && getChildNodess.length === 1) && (e.keyCode === 8 || e.keyCode === 46)){
 			e.preventDefault();
 		}
@@ -48,7 +44,7 @@ const CreateChap = () => {
 			chapObj["title"] = values.title;
 			chapObj["paragraf"] = childNodes.outerHTML;
 			chapObj["idbook"] = params.idbook
-			createChap('/chapter/create', chapObj)
+			createChap('https://e-books-app.herokuapp.com/chapter/create', chapObj)
 			.then(data => {
 				res = data.message
 			})

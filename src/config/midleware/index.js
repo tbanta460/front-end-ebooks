@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { getAllData } from '../redux/action/setForm.js';
 import Axios from 'axios';
 
@@ -6,7 +5,7 @@ const Middleware = (auth) => {
 	return new Promise(async (resolve, reject) => {
 		const inRefresh = (refreshToken) => {
 			return new Promise((resolve, reject) => {
-				Axios.post('/refresh',{token: refreshToken}, {
+				Axios.post('https://e-books-app.herokuapp.com/refresh',{token: refreshToken}, {
 					withCredentials:true,
 					headers:{
 						"Content-Type": "application/json"
@@ -26,7 +25,7 @@ const Middleware = (auth) => {
 			})
 		}
 		const requestAccess = async (accessToken, refreshToken) => {
-			Axios.get(`/my-books`,{
+			Axios.get(`https://e-books-app.herokuapp.com/my-books`,{
 				withCredentials: true,
 				headers:{
 					'Authorization': `Bearer ${accessToken}`,
@@ -60,7 +59,7 @@ const Middleware = (auth) => {
 			})
 		}
 		const tokenUser = async (dataUser) => {
-			await Axios.get('http://localhost:5000/cookies', {
+			await Axios.get('https://e-books-app.herokuapp.com/cookies', {
 				withCredentials:true,
 				headers:{
 					Accept: 'application/json',
@@ -84,7 +83,7 @@ const Middleware = (auth) => {
 		}
 		
 		const getData = async () => {
-			await getAllData(`/my-books/${auth.userId}`)
+			await getAllData(`https://e-books-app.herokuapp.com/my-books/${auth.userId}`)
 				.then(data => {
 					tokenUser(data.data.data);
 				})

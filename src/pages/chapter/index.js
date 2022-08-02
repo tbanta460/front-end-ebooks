@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './index.css';
 import useAuth from '../../hooks/useAuth.js';
-import { getChaps, getBooks, getAllData } from '../../config/redux/action/setForm.js';
+import { getAllData } from '../../config/redux/action/setForm.js';
 // Compoent
 
 import { Button, CoverImage } from '../../components';
 
 // image
-import { Haruka, Star, Eye, Bab } from '../../assets';
+import { Star, Eye, Bab } from '../../assets';
 
 const Chapters = () => {
 	const [dataBook, setDataBooks] = useState([]);
@@ -20,7 +20,7 @@ const Chapters = () => {
 	const params = useParams();
 	useEffect(() => {
 		const getDataBooks = async () => {
-			getAllData(`/dashboard/getbooks/${params.idbook}`)
+			getAllData(`https://e-books-app.herokuapp.com/dashboard/getbooks/${params.idbook}`)
 			.then(async data => {
 				const res = data.data.data[0];
 				const parser = new DOMParser();
@@ -35,7 +35,7 @@ const Chapters = () => {
 			})
 		}
 		const getDataChaps = async () => {
-				getAllData(`/chapter/${params.idbook}`)
+				getAllData(`https://e-books-app.herokuapp.com/chapter/${params.idbook}`)
 				.then(async data => {
 					await setDataChap(data.data.data)
 				})
@@ -58,12 +58,13 @@ const Chapters = () => {
 	const readChap = (data) => {
 		navigate(`/read/${data.chapid}/${params.bookname}`)
 	}
+	console.log(dataBook.cover, "test")
 	return (
 		<>
 			<div className="main-card-chaps">
 				<div className="part-info">
 					<div className="mid">
-						<CoverImage srcImage={`/${dataBook.cover}`} altImage="Cover Buku"/>
+						<CoverImage srcImage={`${dataBook.cover}`} altImage="Cover Buku"/>
 						<div className="info-book">
 							<h3>{dataBook.title}</h3>
 							<div className="atbli">

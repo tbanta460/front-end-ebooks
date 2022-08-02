@@ -2,7 +2,7 @@ import Axios from 'axios';
 const RefreshToken = (refreshToken) => {
 	const inRefresh = async () => {
 		try{
-			const resData = await Axios.post('/refresh',{token:refreshToken},{
+			const resData = await Axios.post('https://e-books-app.herokuapp.com/refresh',{token:refreshToken},{
 			withCredentials: true,
 			headers:{
 				'Content-Type': 'application/json',

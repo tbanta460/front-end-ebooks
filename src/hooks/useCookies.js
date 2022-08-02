@@ -6,7 +6,7 @@ const useCookie = () => {
 	
 	const refresh = async () => {
 		let result
-		await Axios.get('/cookies',{
+		await Axios.get('https://e-books-app.herokuapp.com/cookies',{
 			withCredentials:true,
 			headers:{
 				Accept:"application/json",
