@@ -58,7 +58,6 @@ const Chapters = () => {
 	const readChap = (data) => {
 		navigate(`/read/${data.chapid}/${params.bookname}`)
 	}
-	console.log(dataBook.cover, "test")
 	return (
 		<>
 			<div className="main-card-chaps">

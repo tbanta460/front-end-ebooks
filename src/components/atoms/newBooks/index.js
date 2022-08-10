@@ -20,7 +20,7 @@ const NewBooks = ({dataBooks = [], dataBook}) => {
 								dataBooks.length !== 0
 								? dataBooks.map((data,index) => {
 									return index >= 0 && index <= 7 && (
-										<div key={data.idbook}className='int-lpp'><Link className="nav-link nl" to={`/sinopsis/${data.idBook}/${data.titleBook.split(" ").join("-")}`}><SmallListBooks titleBook={data.title} authorBook={data.author} srcc={data.cover} altt={`sampul gambar dari ${data.title}`}/></Link></div>
+										<div key={data.idbook}className='int-lpp'><Link className="nav-link nl" to={`/sinopsis/${data.idbook}/${data.title.split(" ").join("-")}`}><SmallListBooks titleBook={data.title} authorBook={data.author} srcc={data.cover} altt={`sampul gambar dari ${data.title}`}/></Link></div>
 									    )
 								    })
 								: null

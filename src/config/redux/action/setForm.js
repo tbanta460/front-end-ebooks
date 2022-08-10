@@ -33,10 +33,8 @@ export const loginPost = (dataUser, path) => {
 			'Content-Type':'application/json'
 		}
 	}).then(data => {
-		console.log(data, "apakah benar?")
 		return data
 	}).catch(error => {
-		console.log(error.response, "apakah salah?")
 		return error.response
 	})
 }
