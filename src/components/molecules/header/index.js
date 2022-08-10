@@ -37,7 +37,7 @@ const Header = () => {
 	},[auth])
 	const handleClickEvent = () => {
 		if(isLogin){
-			Axios.get('/removeCookies')
+			Axios.get('https://e-books-app.herokuapp.com/removeCookies')
 			.then(data => {
 				if(data.statusText === "OK")setAuth({login:false})
 			})
