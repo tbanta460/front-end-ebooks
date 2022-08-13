@@ -39,7 +39,9 @@ const Header = () => {
 		if(isLogin){
 			Axios.get('https://e-books-app.herokuapp.com/removeCookies')
 			.then(data => {
-				if(data.statusText === "OK")setAuth({login:false})
+				if(data.data.success === true){
+					setAuth({login:false})
+				}
 			})
 			.catch(error => {
 				console.log(error.response, "from error header")
